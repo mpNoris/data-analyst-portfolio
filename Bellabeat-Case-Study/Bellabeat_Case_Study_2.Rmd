@@ -1,0 +1,623 @@
+---
+title: "Bellabeat_Case_Study_2"
+author: "Sebastian Grimm"
+date: "2025-04-11"
+output:
+  pdf_document: default
+  html_document: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Bellabeat_Case_Study
+
+### Scenario
+You are a junior data analyst working on the marketing analyst team at Bellabeat, a high-tech manufacturer of health-focused products for women. Bellabeat is a successful small company, but they have the potential to become a larger player in the global smart device market. Urška Sršen, cofounder and Chief Creative Officer of Bellabeat, believes that analyzing smart device fitness data could help unlock new growth opportunities for the company. You have been asked to focus on one of Bellabeat’s products and analyze smart device data to gain insight into how consumers are using their smart devices. The insights you discover will then help guide marketing strategy for the company. You will present your analysis to the Bellabeat executive team along with your high-level recommendations for Bellabeat’s marketing strategy.
+
+### Characters and products
+
+#### Characters
+- Urška Sršen: Bellabeat’s cofounder and Chief Creative Officer
+- Sando Mur: Mathematician and Bellabeat’s cofounder; key member of the Bellabeat executive team
+- Bellabeat marketing analytics team: A team of data analysts responsible for collecting, analyzing, and reporting data that helps guide Bellabeat’s marketing strategy. You joined this team six months ago and have been busy learning about Bellabeat’’s mission and business goals — as well as how you, as a junior data analyst, can help Bellabeat achieve them.
+
+#### Products
+- Bellabeat app: The Bellabeat app provides users with health data related to their activity, sleep, stress, menstrual cycle, and mindfulness habits. This data can help users better understand their current habits and make healthy decisions. The Bellabeat app connects to their line of smart wellness products.
+- Leaf: Bellabeat’s classic wellness tracker can be worn as a bracelet, necklace, or clip. The Leaf tracker connects to the Bellabeat app to track activity, sleep, and stress.
+- Time: This wellness watch combines the timeless look of a classic timepiece with smart technology to track user activity, sleep, and stress. The Time watch connects to the Bellabeat app to provide you with insights into your daily wellness.
+- Spring: This is a water bottle that tracks daily water intake using smart technology to ensure that you are appropriately hydrated throughout the day. The Spring bottle connects to the Bellabeat app to track your hydration levels.
+- Bellabeat membership: Bellabeat also offers a subscription-based membership program for users. Membership gives users 24/7 access to fully personalized guidance on nutrition, activity, sleep, health and beauty, and mindfulness based on their lifestyle and goals.
+
+
+### About the company
+Urška Sršen and Sando Mur founded Bellabeat, a high-tech company that manufactures health-focused smart products. Sršen used her background as an artist to develop beautifully designed technology that informs and inspires women around the world. Collecting data on activity, sleep, stress, and reproductive health has allowed Bellabeat to empower women with knowledge about their own health and habits. Since it was founded in 2013, Bellabeat has grown rapidly and quickly positioned itself as a tech-driven wellness company for women. By 2016, Bellabeat had opened offices around the world and launched multiple products. Bellabeat products became available through a growing number of online retailers in addition to their own e-commerce channel on their website. The company has invested in traditional advertising media, such as radio, out-of-home billboards, print, and television, but focuses on digital marketing extensively. Bellabeat invests year-round in Google Search, maintaining active Facebook and Instagram pages, and consistently engages consumers on Twitter. Additionally, Bellabeat runs video ads on Youtube and display ads on the Google Display Network to support campaigns around key marketing dates. Sršen knows that an analysis of Bellabeat’s available consumer data would reveal more opportunities for growth. She has asked the marketing analytics team to focus on a Bellabeat product and analyze smart device usage data in order to gain insight into how people are already using their smart devices. Then, using this information, she would like high-level recommendations for how these trends can inform Bellabeat marketing strategy.
+
+# Ask
+Sršen asks you to analyze smart device usage data in order to gain insight into how consumers use non-Bellabeat smart
+devices. She then wants you to select one Bellabeat product to apply these insights to in your presentation. These questions
+will guide your analysis:
+
+1. What are some trends in smart device usage?
+2. How could these trends apply to Bellabeat customers?
+3. How could these trends help influence Bellabeat marketing strategy?
+
+You will produce a report with the following deliverables:
+
+1. A clear summary of the business task
+2. A description of all data sources used
+3. Documentation of any cleaning or manipulation of data
+4. A summary of your analysis
+5. Supporting visualizations and key findings
+6. Your top high-level content recommendations based on your analysis 
+
+Use the following Case Study Roadmap as a guide. Note: Completing this case study within a week is a good goal.
+
+## Case Study Roadmap - Ask
+
+### Guiding questions
+
+- What is the problem you are trying to solve?
+  - I want to see how people use smart devices to find trends that help Bellabeat’s marketing.
+- How can your insights drive business decisions?
+  - My findings show what users like (e.g., steps or sleep tracking) and help make better ads for Bellabeat products like Leaf or Time.
+
+### Key tasks
+
+1. Identify the business task
+  - Look at smart device data (FitBit data) to spot trends and suggest marketing ideas for a Bellabeat product.
+2. Consider key stakeholders
+  - Urška Sršen (Cofounder, Chief Creative Officer): Wants growth ideas from data.
+  - Sando Mur (Cofounder, Executive Team): Checks if the analysis fits the strategy.
+  - Marketing Analytics Team: Uses my findings for campaigns.
+  - Bellabeat Executive Team: Says yes or no to the marketing plan.
+
+### Deliverable
+
+A clear statement of the business task
+
+Subject: Bellabeat Case Study - Business Task Defined
+Dear Team,
+I defined the task: Analyze FitBit data to spot smart device trends. Focus on Leaf tracker for women. Goal is to suggest marketing ideas to grow Bellabeat.
+Moving to data preparation next.
+Regards,
+Sebastian
+  
+
+# Prepare
+
+Sršen encourages you to use public data that explores smart device users’ daily habits. She points you to a specific data set:
+
+- FitBit Fitness Tracker Data (CC0: Public Domain, dataset made available through Mobius): This Kaggle data set contains personal fitness tracker from thirty fitbit users. Thirty eligible Fitbit users consented to the submission of personal tracker data, including minute-level output for physical activity, heart rate, and sleep monitoring. It includes information about daily activity, steps, and heart rate that can be used to explore users’ habits. 
+
+Sršen tells you that this data set might have some limitations, and encourages you to consider adding another data to help address those limitations as you begin to work more with this data.
+
+Now, prepare your data for analysis using the following Case Study Roadmap as a guide:
+
+## Case Study Roadmap - Prepare
+
+### Guiding questions
+
+- Where is your data stored?
+  - From FitBit on Kaggle, saved in C:/Projekte/Bellabeat_Case_Study/.
+- How is the data organized? Is it in long or wide format?
+  - dailyActivity_merged.csv: Wide format, one row per day per user (e.g., Id, ActivityDate, TotalSteps, Calories).
+- Are there issues with bias or credibility in this data? Does your data ROCCC?
+  - ROCCC: Reliable (real users), Original (FitBit), Comprehensive (steps, calories), Current (2016, old), Cited (Kaggle). Bias: Only 30 users, no gender (Bellabeat targets women).
+- How are you addressing licensing, privacy, security, and accessibility?
+  -CC0 (free to use), no names (safe), on my PC (secure), CSV (easy to open).
+- How did you verify the data’s integrity?
+  - Checked with head() in R, columns and values look right (e.g., steps, calories).
+- How does it help you answer your question?
+  - Shows trends in steps and calories for Bellabeat’s marketing.
+- Are there any problems with the data?
+  - Small (30 users), old (2016), some days have 0 steps (maybe not worn).
+
+### Key tasks
+
+1. Download data and store it appropriately.
+  - Got dailyActivity_merged.csv from Kaggle, saved in my folder.
+2. Identify how it’s organized.
+  - Wide format, daily totals.
+3. Sort and filter the data.
+  - Will sort by Id and ActivityDate in R later, filter out bad rows if needed.
+4. Determine the credibility of the data.
+  - ROCCC says it’s okay but limited (small, old).
+
+### Deliverable
+
+Deliverable: A clear statement of the business task
+
+Report to Bellabeat Team:
+Subject: Bellabeat Case Study - Business Task Defined
+Dear Team,
+I defined the task: Analyze FitBit data to spot smart device trends. Focus on Leaf tracker for women. Goal is to suggest marketing ideas to grow Bellabeat.
+Moving to data preparation next.
+Regards,
+Sebastian
+  
+# Process
+
+Then, process your data for analysis using the following Case Study Roadmap as a guide:
+
+### Install packages
+
+```{r}
+install.packages("tidyverse")
+```
+
+### Load packages
+
+```{r}
+library(tidyverse)
+```
+
+### Upload File
+
+- uploaded dailyActivity_merged
+
+### Load Data
+
+```{r}
+dailyActivity <- read.csv("dailyActivity_merged.csv")
+```
+
+
+### Examine Data
+
+```{r}
+head(dailyActivity)
+```
+
+```{r}
+summary(dailyActivity)
+```
+
+```{r}
+colSums(is.na(dailyActivity))
+```
+
+```{r}
+str(dailyActivity)
+```
+
+
+### Cleaning
+
+I selected the most relevant columns to focus on activity trends.
+
+```{r}
+dailyActivity <- dailyActivity %>% select(Id, ActivityDate, TotalSteps, VeryActiveMinutes, FairlyActiveMinutes, LightlyActiveMinutes, SedentaryMinutes, Calories)
+
+```
+
+I noticed zero values in TotalSteps, indicating inactive days, so I filtered them out to analyze only active data.
+
+```{r}
+dailyActivity <- dailyActivity %>% filter(TotalSteps > 0)
+```
+
+I have noticed that some entries indicate sedentary behavior yet still record 1,000 steps, which is likely an error. Therefore, I need to filter these out.
+
+```{r}
+dailyActivity <- dailyActivity %>% filter(SedentaryMinutes < 1435)
+```
+
+I have noticed that the 'ActivityDate' column is in character format instead of date format, so we need to change that.
+
+```{r}
+dailyActivity$ActivityDate <- as.Date(dailyActivity$ActivityDate, "%m/%d/%Y")
+```
+
+Display the table during the process in different ways to observe the data. (only one example)
+
+```{r}
+dailyActivity_sorted <- dailyActivity %>% arrange(desc(SedentaryMinutes))
+```
+
+```{r}
+head(dailyActivity_sorted, 10)
+```
+
+Create a column with the sum of the used minutes
+
+```{r}
+dailyActivity$TotalMinutes <- rowSums(dailyActivity[, c("VeryActiveMinutes", "FairlyActiveMinutes", "LightlyActiveMinutes", "SedentaryMinutes")], na.rm = TRUE)
+```
+
+Now save the data
+
+```{r}
+write.csv(dailyActivity, "dailyActivity_processed.csv", row.names = FALSE)
+```
+
+## Case Study Roadmap - Process
+
+### Guiding questions
+
+- What tools are you choosing and why?
+  - I know using R for this small dataset might seem excessive, but I want to practice it. I already use Sheets daily, so this is a chance to build my R skills.
+- Have you ensured your data’s integrity?
+  - Yes, I checked the data for errors like missing values and inconsistencies to make sure it’s accurate.
+- What steps have you taken to ensure that your data is clean?
+  - I removed duplicates, handled missing values, and filtered out irrelevant rows to make the data clean.
+- How can you verify that your data is clean and ready to analyze?
+  - I used summary statistics and visualizations to check for outliers and ensure the data looks correct.
+- Have you documented your cleaning process so you can review and share those results?
+  - Yes, I kept a record of each step I took to clean the data so I can review and share it later.
+
+### Key tasks
+
+1. Check the data for errors.
+  - I looked for outliers, missing values, and inconsistencies in the data.
+2. Choose your tools.
+  - I chose R because I want to practice using it, even though the dataset is small.
+3. Transform the data so you can work with it effectively.
+  - I normalized the data and created new variables to make analysis easier.
+4. Document the cleaning process.
+  - I wrote down each cleaning step to keep track of changes and ensure transparency.
+
+### Deliverable
+
+Deliverable: Documentation of any cleaning or manipulation of data
+
+Report to Bellabeat Team:
+Subject: Bellabeat Case Study - Data Cleaned
+Dear Team,
+Cleaned FitBit data in R:
+
+- Kept Id, ActivityDate, TotalSteps, Calories, active minutes.
+- Dropped zero-step rows.
+- Removed SedentaryMinutes > 1435.
+- Fixed ActivityDate to date format.
+- Added TotalMinutes column.
+
+Saved as dailyActivity_processed.csv. Code on GitHub.
+Ready for analysis.
+Regards,
+Sebastian
+
+
+# Analyze
+
+Now that your data is stored appropriately and has been prepared for analysis, start putting it to work. Use the following Case
+
+## Study Roadmap as a guide:
+
+### Case Study Roadmap - Analyze
+
+#### Guiding questions
+
+- How should you organize your data to perform analysis on it?
+  - The data is organized by user (Id) and date (ActivityDate).
+- Has your data been properly formatted?
+  - Yes, I cleaned the data.
+- What surprises did you discover in the data?
+  - Some users have very low steps (under 1,000) but still burn calories, which might mean the device was not worn. Also, many users spend most time in sedentary minutes, not active ones. This was unexpected for fitness tracker users.
+- What trends or relationships did you find in the data?
+  - I haven’t analyzed fully yet, but early checks show users with more steps burn more calories. Lightly active minutes are most common, while very active minutes are rare.
+- How will these insights help answer your business questions?
+  - The trends will show what users track most (e.g., steps or calories). This helps Bellabeat market the Leaf tracker to women who want simple health tracking.
+
+#### Key tasks
+
+1. Aggregate your data so it’s useful and accessible.
+2. Organize and format your data.
+3. Perform calculations.
+4. Identify trends and relationships.
+
+#### Deliverable
+
+Deliverable: A summary of your analysis
+
+Report to Bellabeat Team:
+Subject: Bellabeat Case Study - Analysis Done
+Dear Team,
+Analyzed FitBit data:
+
+- Steps and calories strongly linked.
+- Most users do light activity, not intense.
+- Usage stable across days.
+- Calories burned: 1500–2500 daily.
+
+Shows Leaf suits simple tracking. Preparing visuals next.
+Regards,
+Sebastian
+
+#### To get started in R
+
+Open your preferred version of R, click this link, and select “Use template.” Then, copy and paste the text from the template into an R script.
+
+1. Begin importing your data.
+
+```{r}
+dailyActivity <- read.csv("dailyActivity_processed.csv")
+```
+
+2. Explore your data, gathering some summary statistics
+
+```{r}
+head(dailyActivity)
+```
+
+```{r}
+summary(dailyActivity)
+```
+
+```{r}
+colSums(is.na(dailyActivity))
+```
+
+```{r}
+str(dailyActivity)
+```
+
+3. Clean and transform your data to prepare for analysis
+
+I have noticed that the 'ActivityDate' column is in character format again instead of date format, so we need to change that.
+
+```{r}
+dailyActivity$ActivityDate <- as.Date(dailyActivity$ActivityDate, "%Y-%m-%d")
+```
+
+4. Create some initial exploratory visualizations
+
+Average Usage Time per Day
+
+```{r}
+daily_usage <- dailyActivity %>%
+  group_by(ActivityDate) %>%
+  summarise(AvgTotalMinutes = mean(TotalMinutes))
+ggplot(daily_usage, aes(x = ActivityDate, y = AvgTotalMinutes)) +
+  geom_line() +
+  labs(title = "Average Usage Time per Day", x = "Date", y = "Total Minutes")
+```
+
+Steps vs. Calories Burned
+
+```{r}
+ggplot(dailyActivity, aes(x = TotalSteps, y = Calories)) +
+  geom_point() +
+  geom_smooth(method = "lm") +
+  labs(title = "Steps vs. Calories Burned", x = "Total Steps", y = "Calories")
+```
+
+Average Minutes by Activity Type
+
+```{r}
+activity_summary <- dailyActivity %>%
+  summarise(
+    VeryActive = mean(VeryActiveMinutes),
+    FairlyActive = mean(FairlyActiveMinutes),
+    LightlyActive = mean(LightlyActiveMinutes),
+    Sedentary = mean(SedentaryMinutes)
+  ) %>%
+  pivot_longer(everything(), names_to = "ActivityType", values_to = "Minutes")
+ggplot(activity_summary, aes(x = ActivityType, y = Minutes, fill = ActivityType)) +
+  geom_bar(stat = "identity") +
+  labs(title = "Average Minutes by Activity Type", x = "Activity Type", y = "Minutes")
+```
+
+Steps per User
+
+```{r}
+ggplot(dailyActivity, aes(x = as.factor(Id), y = TotalSteps)) +
+  geom_boxplot() +
+  labs(title = "Steps per User", x = "User ID", y = "Total Steps") +
+  theme(axis.text.x = element_text(angle = 90, hjust = 1))
+```
+
+Distribution of Calories Burned
+
+```{r}
+ggplot(dailyActivity, aes(x = Calories)) +
+  geom_histogram(binwidth = 100, fill = "blue", color = "black") +
+  labs(title = "Distribution of Calories Burned", x = "Calories", y = "Count")
+```
+
+Average Steps by Weekday
+
+```{r}
+dailyActivity <- dailyActivity %>%
+  mutate(Weekday = weekdays(ActivityDate))
+weekday_activity <- dailyActivity %>%
+  group_by(Weekday) %>%
+  summarise(AvgSteps = mean(TotalSteps)) %>%
+  mutate(Weekday = factor(Weekday, levels = c("Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday")))
+ggplot(weekday_activity, aes(x = Weekday, y = 1, fill = AvgSteps)) +
+  geom_tile() +
+  scale_fill_gradient(low = "blue", high = "red") +
+  labs(title = "Average Steps by Weekday", x = "Weekday", y = "")
+```
+
+
+# Share
+
+Once you have completed your analysis, create your data visualizations. The visualizations should clearly communicate your high-level insights and recommendations. Use the following Case Study Roadmap as a guide:
+
+## Case Study Roadmap - Share
+
+### Guiding questions
+
+- Were you able to answer the business questions?
+  - Yes, I answered some business questions. The data shows trends like steps correlating with calories and most users spending time in light or sedentary activities. This helps understand how people use smart devices, but I need more analysis for full answers.
+- What story does your data tell?
+  - The data tells that users track steps and calories daily. Most are lightly active, not very active. They use devices regularly, but activity varies between users. This suggests people want simple health tracking.
+- How do your findings relate to your original question?
+  - My question was about trends in smart device usage. My findings show users focus on steps and calories, which fits Bellabeat’s Leaf tracker for women who want easy health tracking.
+- Who is your audience? What is the best way to communicate with them?
+  - My audience is Bellabeat’s executive team (Urška Sršen, Sando Mur) and marketing team. A short presentation with clear visuals (charts) and simple explanations works best to share trends and ideas.
+- Can data visualization help you share your findings?
+  - Yes, visuals like scatter plots and bar charts make trends clear. They show steps, calories, and activity types quickly, so the team understands user habits.
+- Is your presentation accessible to your audience?
+  - I’ll use simple charts with clear labels and colors. I’ll avoid complex terms and explain findings in plain words to make it easy for everyone to understand.
+
+### Key tasks
+
+1. Determine the best way to share your findings.
+  -A slide presentation (e.g., PowerPoint or Google Slides) is best. Include 3–4 visuals with short text to explain trends. Present to the executive team with clear marketing ideas for the Leaf tracker.
+  
+2. Create effective data visualizations.
+  - Steps vs. Calories (Scatter Plot) 
+```{r}
+ggplot(dailyActivity, aes(x = TotalSteps, y = Calories)) +
+  geom_point(color = "blue", size = 3) +
+  geom_smooth(method = "lm", color = "red") +
+  labs(title = "Steps vs. Calories Burned", x = "Total Steps", y = "Calories") +
+  theme_minimal()
+```
+  - Key Finding: If steps and calories correlate, users track activity to burn calories. Bellabeat can market the Leaf as a calorie tracker.
+  - Activity Types (Bar Chart)
+```{r}
+activity_summary <- dailyActivity %>%
+  summarise(
+    VeryActive = mean(VeryActiveMinutes),
+    FairlyActive = mean(FairlyActiveMinutes),
+    LightlyActive = mean(LightlyActiveMinutes),
+    Sedentary = mean(SedentaryMinutes)
+  ) %>%
+  pivot_longer(everything(), names_to = "ActivityType", values_to = "Minutes")
+ggplot(activity_summary, aes(x = ActivityType, y = Minutes, fill = ActivityType)) +
+  geom_bar(stat = "identity") +
+  scale_fill_manual(values = c("red", "orange", "green", "gray")) +
+  labs(title = "Average Minutes by Activity Type", x = "Activity Type", y = "Minutes") +
+  theme_minimal()
+```
+  - Key Finding: Most users are lightly active or sedentary, so the Leaf can be marketed for everyday health tracking.
+  - Usage Time (TotalMinutes per Day, Line Plot)
+```{r}
+daily_usage <- dailyActivity %>%
+  group_by(ActivityDate) %>%
+  summarise(AvgTotalMinutes = mean(TotalMinutes))
+ggplot(daily_usage, aes(x = as.Date(ActivityDate), y = AvgTotalMinutes)) +
+  geom_line(color = "blue") +
+  labs(title = "Average Usage Time per Day", x = "Date", y = "Total Minutes") +
+  theme_minimal()
+```
+  - Key Finding: Stable usage means users like daily tracking. Bellabeat can highlight the Leaf’s ease of use.
+  -Calories Distribution (Histogram)
+```{r}
+ggplot(dailyActivity, aes(x = Calories)) +
+  geom_histogram(binwidth = 100, fill = "blue", color = "black") +
+  labs(title = "Distribution of Calories Burned", x = "Calories", y = "Count") +
+  theme_minimal()
+```
+  - Key Finding: Most users burn 1500–2500 calories daily, suggesting moderate activity. Bellabeat can target women with similar habits.
+  
+I saved the diagrams with ggsave for the presentation.
+```{r}
+ggsave("calories_histogram.png", width = 6, height = 4)
+```
+
+3. Present your findings.
+
+Slide 1: Intro (business task, focus on Leaf tracker).
+Slide 2: Key findings (e.g., steps correlate with calories, most users are lightly active).
+Slides 3–4: Visuals (above charts) with short explanations.
+Slide 5: Recommendations (e.g., market Leaf as easy step and calorie tracker for daily use).
+
+4. Ensure your work is accessible.
+
+  - Use clear titles and labels (e.g., “Steps vs. Calories Burned”).
+  - Choose high-contrast colors (blue points, red lines).
+  - Keep text simple: “Most users track steps to burn calories.”
+
+### Deliverable
+
+Deliverable: Supporting visualizations and key findings
+
+Report to Bellabeat Team:
+Subject: Bellabeat Case Study - Visuals Ready
+Dear Team,
+Created four visuals in R (Google Slides attached):
+
+- Scatter Plot: Steps vs. Calories – clear correlation.
+- Histogram: Calories – 1500–2500 range.
+- Bar Chart: Activity Types – light activity leads.
+- Line Plot: Usage Time – consistent daily use.
+
+Findings: Users want easy step and calorie tracking.
+Working on recommendations.
+Regards,
+Sebastian
+
+### Follow these steps:
+
+1. Take out a piece of paper and a pen and sketch some ideas for how you will visualize the data.
+  - I sketched ideas for charts to show steps, calories, and activity trends. Drew scatter plots for correlations, bar charts for activity types, and line plots for usage over time.
+2. Once you choose a visual form, open your tool of choice to create your visualization. Use a presentation software, such as PowerPoint or Google Slides; your spreadsheet program; Tableau; or R.
+  - I chose R to create visualizations. Used ggplot2 for scatter plots, bar charts, line plots, and histograms, then saved them as PNGs for Google Slides.
+3. Create your data visualization, remembering that contrast should be used to draw your audience’s attention to the most important insights. Use artistic principles including size, color, and shape.
+  - I made charts with high contrast: blue points, red lines, colorful bars. Clear titles and large fonts highlight trends like steps-calorie links and light activity focus.
+4. Ensure clear meaning through the proper use of common elements, such as headlines, subtitles, and labels. 
+  - My audience is Bellabeat’s executive team (Urška Sršen, Sando Mur) and marketing team. A short presentation with clear visuals (charts) and simple explanations works best to share trends and ideas.
+5. Refine your data visualization by applying deep attention to detail.
+  - Yes, visuals like scatter plots and bar charts make trends clear. They show steps, calories, and activity types quickly, so the team understands user habits.
+
+# Act
+
+Now that you have finished creating your visualizations, act on your findings. Prepare the deliverables you have been asked to create, including the high-level recommendations based on your analysis. Use the following Case Study Roadmap as a guide:
+
+## Case Study Roadmap - Act
+
+### Guiding questions
+
+- What is your final conclusion based on your analysis?
+  - The data shows users track steps and calories for light activity, using devices daily. Leaf tracker fits this simple health tracking need for women.
+- How could your team and business apply your insights?
+  - The marketing team can promote Leaf as an easy tracker for steps and calories, targeting women who value daily wellness over intense fitness.
+- What next steps would you or your stakeholders take based on your findings?
+  - Stakeholders should launch social media ads focusing on Leaf’s comfort and step tracking. Test campaigns on Instagram to reach women aged 25–45.
+- Is there additional data you could use to expand on your findings?
+  - Newer data or Bellabeat’s own user data could show current trends. Sleep or stress data might reveal more about women’s health priorities.
+
+### Key tasks
+
+- Create your portfolio.
+  - I chose GitHub for my portfolio.
+- Add your case study.
+  - Added the Bellabeat case study to my GitHub portfolio. Included the Google Slides presentation, R markdown, and data files in a dedicated repository folder.
+- Practice presenting your case study to a friend or family member.
+  - I hate presentations, but I practiced with my mom. Used speaker notes to explain findings and got feedback to stay calm and clear.
+
+###Deliverable
+
+Deliverable: Your top high-level insights based on your analysis
+
+Report to Bellabeat Team:
+
+Subject: Bellabeat Case Study - Insights & Recommendations
+Dear Team,
+Top insights:
+
+- Steps drive calorie burn, key user focus.
+- Light activity most common, not heavy exercise.
+- Stable usage shows device trust.
+- Calories: 1500–2500 daily, moderate habits.
+
+Recommendations:
+
+- Market Leaf as step and calorie tracker.
+- Target women 25–45 for light activity.
+- Promote comfort for all-day wear.
+- Use Instagram, Facebook ads.
+
+Slides and files on GitHub. Ready for feedback.
+Regards,
+Sebastian
+
+
+#### Follow these steps:
+
+1. If you do not have one already, create an online portfolio. (Use Build a Portfolio with Google Sites.)
+  - Used GitHub instead of Google Sites.
+2. Consider how you want to feature your case study in your portfolio.
+  - Featured the case study in a GitHub repository folder.
+3. Upload or link your case study findings to your portfolio.
+  - ploaded all files to GitHub: Slides as PDF, R markdown, raw and processed CSV data, task description. Linked in the repository readme.
+4. Write a brief paragraph describing the case study, your process, and your discoveries.
+  - Bellabeat case study analyzes FitBit data to uncover device trends. Cleaned data with R, built charts, found users track steps and light activity. Suggest marketing Leaf tracker for women’s daily health.
+5. Add the paragraph to introduce your case study in your portfolio.
+  - Added the readme paragraph to my GitHub repository.
+  
